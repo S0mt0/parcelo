@@ -154,7 +154,7 @@ export const useShipmentForm = (
           ...prevShipment,
           status: {
             ...prevShipment.status,
-            status: value as "pending" | "shipping" | "delivered" | "seized",
+            status: value as "pending" | "shipping" | "delivered",
           },
         }));
 
