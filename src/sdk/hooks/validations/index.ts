@@ -102,7 +102,7 @@ export const useShipmentEventsInputValidation = () => {
         case "timestamp":
           if (!value) {
             checkValidation("timestamp", true, setEventErrors);
-          } else if (isValidDate(value)) {
+          } else if (!isValidDate(value)) {
             checkValidation("timestamp", true, setEventErrors);
           } else {
             checkValidation("timestamp", false, setEventErrors);

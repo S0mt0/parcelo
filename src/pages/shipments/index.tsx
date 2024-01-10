@@ -6,13 +6,8 @@ import { LoadingUI } from "../../components";
 
 const ShipmentPage = () => {
   const axios = useAxiosPrivate();
-  const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const [shipments, setShipments] = useState<TShipments | []>([]);
+  const [shipments, setShipments] = useState<TShipments>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -44,10 +39,6 @@ const ShipmentPage = () => {
 
   if (loading) {
     return <LoadingUI />;
-  }
-
-  if (!isMounted) {
-    return null;
   }
 
   return (

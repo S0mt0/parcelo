@@ -5,7 +5,6 @@ export const shipmentInitState: TShipment = {
     fullName: "",
     email: "",
     country: "",
-    checkout: false,
   },
 
   trackingId: "",
@@ -34,8 +33,6 @@ export const shipmentInitState: TShipment = {
     status: "pending",
 
     description: "",
-
-    bill: "",
   },
   events: [],
 };

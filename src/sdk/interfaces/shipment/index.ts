@@ -44,7 +44,6 @@ export type TShipment = {
     fullName: string;
     email: string;
     country: string;
-    checkout: boolean;
   };
 
   trackingId: string;
@@ -70,11 +69,9 @@ export type TShipment = {
       };
     };
 
-    status: "pending" | "seized" | "delivered" | "shipping";
+    status: "pending" | "delivered" | "shipping";
 
     description: string;
-
-    bill?: number | string;
   };
 
   events: TEvents;
@@ -107,16 +104,4 @@ export type ShipmentErrors = {
   deliveryDescription: {
     showValidationWarning: boolean;
   };
-};
-
-export type APIAllShipResponse = {
-  shipments: TShipments;
-};
-
-export type APISingleShipResponse = {
-  shipment: TShipment;
-};
-
-export type APIResponseMessage = {
-  message: string;
 };

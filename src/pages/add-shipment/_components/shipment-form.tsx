@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { countries } from "countries-list";
 import { toast } from "sonner";
@@ -68,18 +68,6 @@ export const ShipmentForm = () => {
 
   // function and state returned by the hook are used for inputs validation on blur
   const { handleBlur, shipmentErrors } = useShipmentInputsValidation();
-
-  // show the bill input only when shipment status is seized
-  const [showBill, setShowBill] = useState<boolean>(false);
-  const statusRef = useRef<HTMLSelectElement>(null);
-
-  useEffect(() => {
-    if (statusRef.current?.value === "seized") {
-      setShowBill(true);
-    } else {
-      setShowBill(false);
-    }
-  }, [statusRef.current?.value]);
 
   if (!isMounted) return null;
   return (
@@ -390,33 +378,12 @@ export const ShipmentForm = () => {
                 id="status"
                 onChange={(e) => handleFormChange(e)}
                 value={status.status}
-                ref={statusRef}
                 className="p-2 outline-none border border-orange-200/80 max-w-fit appearance-none rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
               >
                 <option value="pending">Pending</option>
                 <option value="shipping">Shipping</option>
                 <option value="delivered">Delivered</option>
-                <option value="seized">Seized</option>
               </select>
-            </p>
-
-            {/* Bill */}
-            <p
-              className={cn(
-                "hidden flex-1 w-full gap-x-2 capitalize  text-sm font-medium text-neutral-800 items-center",
-                showBill && "flex"
-              )}
-            >
-              <label htmlFor="bill">Bill:</label>
-              <input
-                type="number"
-                name="bill"
-                id="bill"
-                value={status.bill as number}
-                onChange={(e) => handleFormChange(e)}
-                className="p-2 outline-none border border-orange-200/80 max-w-fit rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75 hide-scroll"
-              />
-              <strong>$</strong>
             </p>
           </div>
         </div>

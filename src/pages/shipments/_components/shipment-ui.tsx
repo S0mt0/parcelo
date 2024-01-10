@@ -49,7 +49,6 @@ export const ShipmentUI = ({
                   trackingId={s.trackingId}
                   cCountry={s.belongsTo.country}
                   cName={s.belongsTo.fullName}
-                  checkedout={s.belongsTo.checkout}
                   cEmail={s.belongsTo.email}
                   setShipments={setShipments}
                 />
@@ -122,7 +121,6 @@ interface RowData {
   cName: string;
   cEmail?: string;
   cCountry: string;
-  checkedout: boolean;
   setShipments: React.Dispatch<React.SetStateAction<TShipments>>;
 }
 const TableData = ({
@@ -130,7 +128,6 @@ const TableData = ({
   cName,
   cEmail,
   cCountry,
-  checkedout,
   setShipments,
 }: RowData) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
@@ -193,15 +190,6 @@ const TableData = ({
       >
         <p className="px-2 sm:px-[0.7rem] py-[10px] sm:py-[0.7rem] text-sm sm:text-base">
           {!cCountry || cCountry === "none" ? "Unavailable" : cCountry}
-        </p>
-      </td>
-
-      <td
-        className="min-w-[120px] text-center hover:bg-[#f8f7f78c]"
-        style={!checkedout ? { opacity: "0.7" } : {}}
-      >
-        <p className="px-2 sm:px-[0.7rem] py-[10px] sm:py-[0.7rem] text-sm sm:text-base">
-          {checkedout ? "Delivered" : "Unavailable"}
         </p>
       </td>
 
