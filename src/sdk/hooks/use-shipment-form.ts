@@ -17,9 +17,9 @@ import {
   shipmentInitState,
   useAxiosPrivate,
   useShipmentInputsValidation,
-} from "../../../sdk";
+} from "../../sdk";
 
-export const useAddShipmentForm = () => {
+export const useShipmentForm = () => {
   const [shipment, setShipment] = useState<TShipment>(shipmentInitState);
   const axios = useAxiosPrivate();
 
@@ -175,38 +175,40 @@ export const useAddShipmentForm = () => {
   const [whatToDo, setWhatToDo] = useState<"add" | "edit">("add");
 
   // modal state
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const resetEventModal = useCallback(() => {
+  const closeModal = () => {
+    setIsModalOpen(false);
     // clear modal content before closing so that when modal opens again, it doesn't open prefilled with an event data
     setShipmentEvent(shipmentEventInitState);
-  }, []);
+  };
 
-  const toggleMode = useCallback(
-    (type: "add" | "edit", eventId?: string) => {
-      const allEvents = shipment.events;
+  const openModal = (type: "add" | "edit" | undefined, eventId?: string) => {
+    const allEvents = shipment.events;
 
-      if (type === "add") {
-        setWhatToDo("add");
-      } else if (type === "edit") {
-        setWhatToDo("edit");
-        /** load modal with the data for the event that is to be edited */
-        const foundEvent = allEvents.find((event) => event.eventId === eventId);
+    if (type === "add" || undefined) {
+      setIsModalOpen(true);
+      setWhatToDo("add");
+    } else if (type === "edit") {
+      setWhatToDo("edit");
+      // load modal with the data for the event that is to be edited
+      const foundEvent = allEvents.find((event) => event.eventId === eventId);
 
-        foundEvent && setShipmentEvent(foundEvent);
-      }
-    },
-    [shipment.events]
-  );
+      foundEvent && setShipmentEvent(foundEvent);
+      setIsModalOpen(true);
+    }
+  };
 
   // handle what happens when an event is submitted. Should it be edited or should it be added as new?
-  const handleEventSubmission = useCallback(() => {
+  const handleEventSubmission = () => {
     if (whatToDo === "add") {
       setShipment((prevShipment) => ({
         ...prevShipment,
         events: [...prevShipment.events, shipmentEvent],
       }));
 
-      resetEventModal();
+      // closeModal();
+      setShipmentEvent(shipmentEventInitState);
       toast.success("Event added successfully");
     } else {
       const filteredEvents = shipment.events.filter(
@@ -218,10 +220,10 @@ export const useAddShipmentForm = () => {
         events: [...filteredEvents, { ...shipmentEvent }],
       }));
 
-      resetEventModal();
+      closeModal();
       toast.success("Event modified successfully");
     }
-  }, [resetEventModal, shipment.events, whatToDo, shipmentEvent]);
+  };
 
   // delete single event
   const deleteEvent = useCallback(
@@ -286,19 +288,20 @@ export const useAddShipmentForm = () => {
       shipmentEvent,
       isSubmitting,
       whatToDo,
+      isModalOpen,
     },
 
     actions: {
       handleFormChange,
       handleShipmentEventChange,
-      resetEventModal,
-      toggleMode,
       handleEventSubmission,
       handleShipmentSubmission,
       refreshNumber,
       deleteEvent,
       setShipmentEvent,
       canShipmentBeSubmitted,
+      openModal,
+      closeModal,
     },
   };
 };

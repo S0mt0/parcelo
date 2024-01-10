@@ -92,7 +92,7 @@ const ProfilePage = () => {
               <img
                 src={imgUrl || profile.avatar || "/user1.png"}
                 alt="avatar"
-                className="w-44 h-44 rounded-full object-cover shadow-lg"
+                className="w-40 h-40 rounded-full object-cover shadow-lg"
                 role="button"
               />
 
@@ -115,7 +115,7 @@ const ProfilePage = () => {
               <input
                 type="text"
                 placeholder="Username"
-                className="w-full bg-gray-50 border border-gray-300 p-2 text-lg rounded-3xl px-4 text-slate-600 outline-none focus:ring-2 focus:ring-orange-400/75"
+                className="w-full p-2 outline-none border border-orange-200/80 rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
                 value={profile.username}
                 onChange={(e) => handleChange(e)}
                 name="username"
@@ -128,7 +128,7 @@ const ProfilePage = () => {
               <input
                 type="email"
                 placeholder="Email@example.com"
-                className="w-full bg-gray-50 border border-gray-300 p-2 text-lg rounded-3xl px-4 text-slate-600 outline-none focus:ring-2 focus:ring-orange-400/75"
+                className="w-full p-2 outline-none border border-orange-200/80 rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
                 value={profile.email}
                 onChange={(e) => handleChange(e)}
                 name="email"
@@ -143,7 +143,7 @@ const ProfilePage = () => {
               <input
                 type="text"
                 placeholder="Current Password"
-                className="w-full bg-gray-50 border border-gray-300 p-2 text-lg rounded-3xl px-4 text-slate-600 outline-none focus:ring-2 focus:ring-orange-400/75"
+                className="w-full p-2 outline-none border border-orange-200/80 rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
                 value={profile.oldPassword}
                 onChange={(e) => handleChange(e)}
                 name="oldPassword"
@@ -153,7 +153,7 @@ const ProfilePage = () => {
               <input
                 type="text"
                 placeholder="New Password"
-                className="w-full bg-gray-50 border border-gray-300 p-2 text-lg rounded-3xl px-4 text-slate-600 outline-none focus:ring-2 focus:ring-orange-400/75"
+                className="w-full p-2 outline-none border border-orange-200/80 rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
                 value={profile.newPassword}
                 onChange={(e) => handleChange(e)}
                 name="newPassword"
@@ -165,7 +165,7 @@ const ProfilePage = () => {
               <input
                 type="text"
                 placeholder="Confirm Password"
-                className="w-full bg-gray-50 border border-gray-300 p-2 text-lg rounded-3xl px-4 text-slate-600 outline-none focus:ring-2 focus:ring-orange-400/75"
+                className="w-full p-2 outline-none border border-orange-200/80 rounded-full bg-white text-black focus:ring-2 focus-visible:ring-2 focus:ring-orange-400/75"
                 value={profile.confirmPassword}
                 onChange={(e) => handleChange(e)}
                 name="confirmPassword"

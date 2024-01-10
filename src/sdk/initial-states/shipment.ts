@@ -1,10 +1,4 @@
-import {
-  EventErrors,
-  SHIPMENT_FORM_VALIDATION_MESSAGES,
-  ShipmentErrors,
-  TEvent,
-  TShipment,
-} from "../../sdk";
+import { EventErrors, ShipmentErrors, TEvent, TShipment } from "../../sdk";
 
 export const shipmentInitState: TShipment = {
   belongsTo: {

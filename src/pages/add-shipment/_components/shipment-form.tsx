@@ -8,21 +8,21 @@ import {
   HelpCircle,
   Loader2,
   PackageOpen,
+  PencilLine,
+  PlusCircle,
   RefreshCcw,
   Trash2,
 } from "lucide-react";
 
-import { isEventErrors, useShipmentInputsValidation } from "../../../sdk";
+import {
+  isEventErrors,
+  useShipmentForm,
+  useShipmentInputsValidation,
+} from "../../../sdk";
 
 import { cn } from "../../../lib/utils";
-import { useAddShipmentForm } from "../lib";
 
-import {
-  AddEventModal,
-  Button,
-  EditEventModal,
-  ToolTip,
-} from "../../../components";
+import { Button, EventModal, ToolTip } from "../../../components";
 
 export const ShipmentForm = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -36,20 +36,30 @@ export const ShipmentForm = () => {
       isSubmitting,
       shipmentEvent,
       whatToDo,
+      isModalOpen,
     },
     actions: {
       canShipmentBeSubmitted,
       deleteEvent,
       handleFormChange,
       handleShipmentSubmission,
-      toggleMode,
       refreshNumber,
       handleEventSubmission,
       handleShipmentEventChange,
-      resetEventModal,
       setShipmentEvent,
+      openModal,
+      closeModal,
     },
-  } = useAddShipmentForm();
+  } = useShipmentForm();
+
+  const modalProps = {
+    closeModal,
+    setShipmentEvent,
+    handleEventSubmission,
+    handleShipmentEventChange,
+    whatToDo,
+    shipmentEvent,
+  };
 
   // List of all countries
   const countriesOptions = Object.values(countries).map(
@@ -250,17 +260,18 @@ export const ShipmentForm = () => {
             <div className="flex flex-col mt-8">
               <h1 className="font-bold text-orange-800/95 uppercase text-sm mb-4 flex justify-between gap-6 items-center">
                 <span>Shipment Events</span>
-                <AddEventModal
-                  {...{
-                    shipmentEvent,
-                    whatToDo,
-                    handleEventSubmission,
-                    handleShipmentEventChange,
-                    resetEventModal,
-                    setShipmentEvent,
-                    toggleMode,
+                <Button
+                  className="bg-orange-700/95 border-2 border-amber-500/95 text-white hover:bg-transparent hover:text-orange-700/95 hover:border-orange-700/95"
+                  type="button"
+                  onClick={() => {
+                    openModal("add");
                   }}
-                />
+                  size={"sm"}
+                >
+                  <PlusCircle className="mr-[3px] h-5 w-5" />
+                  Add Event
+                </Button>
+                {isModalOpen && <EventModal {...modalProps} />}
               </h1>
               {events.length ? (
                 events.map((event, i) => (
@@ -275,17 +286,14 @@ export const ShipmentForm = () => {
                         : event.description.slice(0, 40).trim() + "..."}
                     </p>
                     <div className="flex items-center gap-x-[8px]">
-                      <EditEventModal
-                        {...{
-                          shipmentEvent,
-                          handleEventSubmission,
-                          handleShipmentEventChange,
-                          resetEventModal,
-                          setShipmentEvent,
-                          toggleMode,
-                          eventId: event.eventId,
-                        }}
-                      />
+                      <button
+                        className="bg-transparent outline-none border-none"
+                        title="Edit event"
+                        onClick={() => openModal("edit", event.eventId!)}
+                        type="button"
+                      >
+                        <PencilLine className="mr-[3px] h-4 w-4 text-slate-700" />
+                      </button>
                       <button
                         title="Delete event"
                         onClick={() => deleteEvent(event.eventId)}
