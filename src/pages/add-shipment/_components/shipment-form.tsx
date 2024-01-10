@@ -50,7 +50,7 @@ export const ShipmentForm = () => {
       openModal,
       closeModal,
     },
-  } = useShipmentForm();
+  } = useShipmentForm("add");
 
   const modalProps = {
     closeModal,
@@ -130,7 +130,7 @@ export const ShipmentForm = () => {
               <label htmlFor="email">Email:</label>
 
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 value={belongsTo.email}

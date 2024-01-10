@@ -8,6 +8,8 @@ import {
   HelpCircle,
   Loader2,
   PackageOpen,
+  PencilLine,
+  PlusCircle,
   Trash2,
 } from "lucide-react";
 
@@ -15,34 +17,44 @@ import {
   TShipment,
   isEventErrors,
   resetErrors,
+  useShipmentForm,
   useShipmentInputsValidation,
 } from "../../../sdk";
 
 import { cn } from "../../../lib/utils";
-import { useEditShipmentForm } from "../lib";
 
-import { AddEventModal, Button, EditEventModal } from "../../../components";
+import { Button, EventModal } from "../../../components";
 
 export const ShipmentForm = ({ shipment }: { shipment: TShipment | null }) => {
   const {
     states: {
+      shipment: { belongsTo, destination, events, origin, status, trackingId },
       isSubmitting,
       shipmentEvent,
       whatToDo,
-      shipment: { belongsTo, destination, events, origin, status, trackingId },
+      isModalOpen,
     },
     actions: {
       canShipmentBeSubmitted,
-      resetEventModal,
       deleteEvent,
-      handleEventSubmission,
       handleFormChange,
+      handleShipmentSubmission,
+      handleEventSubmission,
       handleShipmentEventChange,
-      toggleMode,
       setShipmentEvent,
-      handleShipmentUpdate,
+      openModal,
+      closeModal,
     },
-  } = useEditShipmentForm(shipment);
+  } = useShipmentForm("edit", shipment);
+
+  const modalProps = {
+    closeModal,
+    setShipmentEvent,
+    handleEventSubmission,
+    handleShipmentEventChange,
+    whatToDo,
+    shipmentEvent,
+  };
 
   /** List of all countries */
   const countriesOptions = Object.values(countries).map(
@@ -79,7 +91,7 @@ export const ShipmentForm = ({ shipment }: { shipment: TShipment | null }) => {
   }, [statusRef.current?.value]);
 
   return (
-    <form onSubmit={(e) => handleShipmentUpdate(e)} className="w-full">
+    <form onSubmit={(e) => handleShipmentSubmission(e)} className="w-full">
       <p className="flex items-center whitespace-nowrap mb-8 text-sm text-slate-600">
         <HelpCircle className="mr-2 h-4 w-4 text-orange-500" /> Shipment must
         have at least one event.
@@ -127,7 +139,7 @@ export const ShipmentForm = ({ shipment }: { shipment: TShipment | null }) => {
               <label htmlFor="email">Email:</label>
 
               <input
-                type="text"
+                type="email"
                 name="email"
                 id="email"
                 value={belongsTo.email}
@@ -254,17 +266,18 @@ export const ShipmentForm = ({ shipment }: { shipment: TShipment | null }) => {
             <div className="flex flex-col mt-8">
               <h1 className="font-bold text-orange-800/95 uppercase text-sm mb-4 flex justify-between gap-6 items-center">
                 <span>Shipment Events</span>
-                <AddEventModal
-                  {...{
-                    shipmentEvent,
-                    whatToDo,
-                    handleEventSubmission,
-                    handleShipmentEventChange,
-                    resetEventModal,
-                    setShipmentEvent,
-                    toggleMode,
+                <Button
+                  className="bg-orange-700/95 border-2 border-amber-500/95 text-white hover:bg-transparent hover:text-orange-700/95 hover:border-orange-700/95"
+                  type="button"
+                  onClick={() => {
+                    openModal("add");
                   }}
-                />
+                  size={"sm"}
+                >
+                  <PlusCircle className="mr-[3px] h-5 w-5" />
+                  Add Event
+                </Button>
+                {isModalOpen && <EventModal {...modalProps} />}
               </h1>
               {events.length ? (
                 events.map((event, i) => (
@@ -279,17 +292,14 @@ export const ShipmentForm = ({ shipment }: { shipment: TShipment | null }) => {
                         : event.description.slice(0, 40).trim() + "..."}
                     </p>
                     <div className="flex items-center gap-x-[14px]">
-                      <EditEventModal
-                        {...{
-                          shipmentEvent,
-                          handleEventSubmission,
-                          handleShipmentEventChange,
-                          resetEventModal,
-                          setShipmentEvent,
-                          toggleMode,
-                          eventId: event.eventId,
-                        }}
-                      />
+                      <button
+                        className="bg-transparent outline-none border-none"
+                        title="Edit event"
+                        onClick={() => openModal("edit", event.eventId!)}
+                        type="button"
+                      >
+                        <PencilLine className="mr-[3px] h-4 w-4 text-slate-700" />
+                      </button>
                       <button
                         title="Delete event"
                         onClick={() => deleteEvent(event.eventId)}

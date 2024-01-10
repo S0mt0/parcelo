@@ -6,6 +6,7 @@ import {
   isValidDate,
   checkValidation,
   shipmentErrorsInitState,
+  isEventErrors,
 } from "../../../sdk";
 
 export const useShipmentInputsValidation = () => {
@@ -122,8 +123,11 @@ export const useShipmentEventsInputValidation = () => {
   );
 
   const canEventBeSubmitted = useMemo(() => {
-    return Object.values(eventErrors).every(
-      (error) => error.showValidationWarning === false
+    return (
+      isEventErrors(eventErrors) &&
+      Object.values(eventErrors).every(
+        (error) => error.showValidationWarning === false
+      )
     );
   }, [eventErrors]);
 
