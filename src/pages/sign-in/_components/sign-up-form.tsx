@@ -32,7 +32,7 @@ export const SignUpForm = () => {
   } = useAuth();
 
   const formik = useSignUpForm();
-  const setActiveTab = useAuthForms((state) => state.setactiveFormTab);
+  const setActiveTab = useAuthForms((state) => state.setActiveFormTab);
 
   return (
     <form

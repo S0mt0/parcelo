@@ -7,7 +7,7 @@ import { SignUpForm } from "./_components/sign-up-form";
 
 const SignInPage = () => {
   const active = useAuthForms((state) => state.activeFormTab);
-  const setActiveTab = useAuthForms((state) => state.setactiveFormTab);
+  const setActiveTab = useAuthForms((state) => state.setActiveFormTab);
 
   return (
     <div

@@ -6,12 +6,7 @@ import { useProfileForm } from "./lib";
 import { Button, ToolTip } from "../../components";
 
 const ProfilePage = () => {
-  const [isMounted, setIsMounted] = useState(false);
   const [canceled, setCanceled] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const {
     authStore: {
@@ -26,7 +21,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const setDisplayImage = async () => {
-      const url = file && (await convertToBase64(file as File));
+      const url = file && (await convertToBase64(file));
       setImgUrl(url as string);
     };
 
@@ -65,9 +60,6 @@ const ProfilePage = () => {
     setCanceled(true);
   };
 
-  useEffect(() => {}, [accessToken, authProfile]);
-
-  if (!isMounted) return null;
   return (
     <div className="p-10 pt-20">
       <form
@@ -97,7 +89,7 @@ const ProfilePage = () => {
               />
 
               <span className=" bg-orange-500 w-fit absolute right-0 bottom-1/4 transform translate-x-1/2 rounded-full p-1 cursor-pointer">
-                <PencilLine className="w- h- text-white" />
+                <PencilLine className="text-white" />
               </span>
             </div>
           </ToolTip>

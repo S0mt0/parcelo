@@ -1,6 +1,7 @@
 import axios from "../api/config";
 import { AuthActions } from "../constants";
 import { useAuth } from ".";
+import { toast } from "sonner";
 
 export const useRefreshToken = () => {
   const { authDispatch } = useAuth();
@@ -24,6 +25,7 @@ export const useRefreshToken = () => {
       return token;
     } catch (error) {
       console.log("[REFRESH ERROR]: ", error);
+      toast.error("Something went wrong, please try again.");
     }
   };
 
