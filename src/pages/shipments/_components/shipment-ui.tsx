@@ -99,11 +99,6 @@ const TableHead = () => (
           Country
         </p>
       </th>
-      <th scope="col" className="text-[#242424] text-center min-w-[120px]">
-        <p className="px-2 sm:px-[0.7rem] py-[10px] sm:py-[0.7rem] text-sm sm:text-base">
-          Card Details
-        </p>
-      </th>
       <th
         scope="col"
         className="text-[#242424] text-center bg-white h-full min-w-[80px] md:min-w-[120px]"
